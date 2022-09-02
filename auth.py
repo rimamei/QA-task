@@ -18,12 +18,12 @@ class TestLogin(unittest.TestCase):
         browser.find_element(By.CSS_SELECTOR,"input#password").send_keys("qa12345")
         time.sleep(1)
         browser.find_element(By.ID,"signin_login").click()
-        time.sleep(1)
+        time.sleep(2)
 
         response_data = browser.find_element(By.ID,"swal2-title").text
         response_message = browser.find_element(By.ID,"swal2-content").text
 
-        self.assertIn('Welcome', response_data)
+        self.assertIn('Welcome Test', response_data)
         self.assertEqual(response_message, 'Anda Berhasil Login')
 
     def test_b_failed_with_empty_password(self): 
@@ -74,7 +74,7 @@ class TestLogin(unittest.TestCase):
         response_data = browser.find_element(By.ID,"swal2-title").text
         response_message = browser.find_element(By.ID,"swal2-content").text
 
-        self.assertIn('not found', response_data)
+        self.assertIn("User's not found", response_data)
         self.assertEqual(response_message, 'Email atau Password Anda Salah')
 
     def test_e_failed_with_empty_email_and_wrong_password(self): 
