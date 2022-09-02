@@ -93,6 +93,48 @@ class TestLogin(unittest.TestCase):
 
         self.assertIn('Oops...', response_data)
         self.assertEqual(response_message, 'Gagal Login!')
+    
+    def test_f_register(self): 
+        browser = self.browser
+        browser.get("http://barru.pythonanywhere.com/daftar")
+        time.sleep(3)
+        browser.find_element(By.ID,"signUp").click()
+        time.sleep(1)
+        browser.find_element(By.ID,"name_register").send_keys("name test")
+        time.sleep(1)
+        browser.find_element(By.ID,"email_register").send_keys("test.qa2@yopmail.com") # use an email hasn't register yet
+        time.sleep(1)
+        browser.find_element(By.ID,"password_register").send_keys("12345")
+        time.sleep(2)
+        browser.find_element(By.ID,"signup_register").click()
+        time.sleep(2)
+
+        response_data = browser.find_element(By.ID,"swal2-title").text
+        response_message = browser.find_element(By.ID,"swal2-content").text
+
+        self.assertIn('berhasil', response_data)
+        self.assertEqual(response_message, 'created user!')
+    
+    def test_f_register_failed_with_used_email(self): 
+        browser = self.browser
+        browser.get("http://barru.pythonanywhere.com/daftar")
+        time.sleep(3)
+        browser.find_element(By.ID,"signUp").click()
+        time.sleep(1)
+        browser.find_element(By.ID,"name_register").send_keys("name test")
+        time.sleep(1)
+        browser.find_element(By.ID,"email_register").send_keys("test.qa@yopmail.com")
+        time.sleep(1)
+        browser.find_element(By.ID,"password_register").send_keys("12345")
+        time.sleep(2)
+        browser.find_element(By.ID,"signup_register").click()
+        time.sleep(2)
+
+        response_data = browser.find_element(By.ID,"swal2-title").text
+        response_message = browser.find_element(By.ID,"swal2-content").text
+
+        self.assertIn('Oops...', response_data)
+        self.assertEqual(response_message, 'Gagal Register!')
 
     def tearDown(self): 
         self.browser.close() 
